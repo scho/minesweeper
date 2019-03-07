@@ -20,7 +20,7 @@ public class Main {
 
             readAction(scanner).accept(position);
 
-            if (game.isGameOver()) {
+            if (game.hasLost()) {
                 game.revealAllAfterGameOver();
 
                 printGameState();

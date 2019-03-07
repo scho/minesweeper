@@ -40,7 +40,7 @@ public class Game {
         state.markAsBomb();
     }
 
-    public boolean isGameOver() {
+    public boolean hasLost() {
         return states.stream().anyMatch(row -> row.stream().anyMatch(State::isGameOver));
     }
 
