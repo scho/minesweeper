@@ -12,16 +12,16 @@ class PositionTest {
 
     @Test
     void constructionOfString_SetsFieldsCorrectly() {
-        Position position = Position.of("A0");
+        Position position = Position.bomb("A0");
 
-        assertThat(position.getRow()).isEqualTo('A');
-        assertThat(position.getColumn()).isEqualTo(0);
+        assertThat(position.getColumn()).isEqualTo('A');
+        assertThat(position.getRow()).isEqualTo(0);
     }
 
     @Test
     void constructionOfString_ValidatesLengthOfInput() {
-        assertThatThrownBy(() -> Position.of("A")).isExactlyInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> Position.of("A12")).isExactlyInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Position.bomb("A")).isExactlyInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Position.bomb("A12")).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @ParameterizedTest
@@ -33,7 +33,7 @@ class PositionTest {
             "AA, false"
     })
     void isValid_ValidatesCorrectly(String position, boolean expectedValue) {
-        assertThat(Position.of(position).isValid()).isEqualTo(expectedValue);
+        assertThat(Position.bomb(position).isValid()).isEqualTo(expectedValue);
     }
 
     @ParameterizedTest
@@ -45,8 +45,8 @@ class PositionTest {
             "A0, C0, false"
     })
     void isAdjacent(String position, String otherPosition, boolean expectedValue) {
-        Position first = Position.of(position);
-        Position second = Position.of(otherPosition);
+        Position first = Position.bomb(position);
+        Position second = Position.bomb(otherPosition);
 
         assertThat(first.isAdjacent(second)).isEqualTo(expectedValue);
     }
