@@ -16,7 +16,7 @@ class GameTest {
 
         game.print(rows::add);
 
-        assertThat(rows).containsOnly("■ ■ ■ ■ ■");
+        assertThat(rows).containsExactly("  A B C D E", "0 ■ ■ ■ ■ ■", "1 ■ ■ ■ ■ ■", "2 ■ ■ ■ ■ ■", "3 ■ ■ ■ ■ ■", "4 ■ ■ ■ ■ ■");
     }
 
     @Test
@@ -27,7 +27,7 @@ class GameTest {
 
         List<String> rows = new LinkedList<>();
         game.print(rows::add);
-        assertThat(rows.get(0)).isNotEqualTo("■ ■ ■ ■ ■");
+        assertThat(rows).element(1).isNotEqualTo("0 ■ ■ ■ ■ ■");
     }
 
     @Test
@@ -38,6 +38,6 @@ class GameTest {
 
         List<String> rows = new LinkedList<>();
         game.print(rows::add);
-        assertThat(rows.get(0)).isEqualTo("⚑ ■ ■ ■ ■");
+        assertThat(rows).element(1).isEqualTo("0 ⚑ ■ ■ ■ ■");
     }
 }

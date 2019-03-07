@@ -18,7 +18,14 @@ public class Game {
     }
 
     public void print(Consumer<String> printer) {
-        states.stream().map(row -> row.stream().map(PositionState::toString).collect(Collectors.joining(" "))).forEach(printer);
+        String columnLabels = states.get(0).stream().map(PositionState::getPosition).map(Position::getColumn).map(Object::toString).collect(Collectors.joining(" "));
+
+        printer.accept("  " + columnLabels);
+
+        states.stream().map(row -> {
+            int rowLabel = row.get(0).getPosition().getRow();
+            return rowLabel + " " + row.stream().map(PositionState::toString).collect(Collectors.joining(" "));
+        }).forEach(printer);
     }
 
     public void reveal(char column, int row) {

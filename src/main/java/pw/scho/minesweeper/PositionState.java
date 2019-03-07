@@ -10,6 +10,10 @@ public class PositionState {
         this.position = position;
     }
 
+    public Position getPosition() {
+        return position;
+    }
+
     public void markAsBomb() {
         if (state != State.HIDDEN) {
             throw new IllegalStateException();
