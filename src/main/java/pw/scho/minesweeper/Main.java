@@ -9,7 +9,7 @@ public class Main {
         new Main().run();
     }
 
-    private Game game = Game.newDefault();
+    private Game game = Game.newDefault(6);
 
     private void run() {
         printGameState();

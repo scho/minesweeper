@@ -62,17 +62,21 @@ public class Game {
     }
 
     public static Game newDefault() {
+        return newDefault(5);
+    }
+
+    public static Game newDefault(int size) {
         var states = new LinkedList<List<State>>();
         var allStates = new LinkedList<State>();
-        IntStream.range(0, 5).forEach(row -> {
+        IntStream.range(0, size).forEach(row -> {
             List<State> rowStates = new LinkedList<>();
-            List.of('A', 'B', 'C', 'D', 'E').forEach(column -> {
+            IntStream.range((int) 'A', (int) 'A' + size).forEach(column -> {
                 State state;
 
                 if (RANDOM.nextInt(10) > 7) {
-                    state = State.bomb(column + String.valueOf(row));
+                    state = State.bomb((char) column + String.valueOf(row));
                 } else {
-                    state = State.empty(column + String.valueOf(row));
+                    state = State.empty((char) column + String.valueOf(row));
                 }
 
                 rowStates.add(state);
