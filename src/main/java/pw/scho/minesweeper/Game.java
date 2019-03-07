@@ -51,24 +51,24 @@ public class Game {
 
     public static Game newDefault() {
         var states = new LinkedList<List<PositionState>>();
-        var positions = new LinkedList<Position>();
+        var allStates = new LinkedList<PositionState>();
         IntStream.range(0, 5).forEach(row -> {
             List<PositionState> rowStates = new LinkedList<>();
             List.of('A', 'B', 'C', 'D', 'E').forEach(column -> {
-                Position position;
+                PositionState positionState;
 
                 if (RANDOM.nextInt(10) > 7) {
-                    position = Position.bomb(column + String.valueOf(row));
+                    positionState = PositionState.bomb(column + String.valueOf(row));
                 } else {
-                    position = Position.empty(column + String.valueOf(row));
+                    positionState = PositionState.empty(column + String.valueOf(row));
                 }
 
-                positions.add(position);
-                rowStates.add(new PositionState(position));
+                rowStates.add(positionState);
             });
             states.add(rowStates);
+            allStates.addAll(rowStates);
         });
-        positions.forEach(position -> position.withPositions(positions));
+        allStates.forEach(positionState -> positionState.withAllStates(allStates));
 
         return new Game(states);
     }

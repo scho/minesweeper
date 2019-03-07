@@ -12,14 +12,14 @@ class PositionStateTest {
 
     @Test
     void hidden_HasSquare() {
-        PositionState state = new PositionState(Position.bomb("A0"));
+        PositionState state = PositionState.bomb("A0");
 
         assertThat(state.toString()).isEqualTo("■");
     }
 
     @Test
     void markAsBomb_SetsState() {
-        PositionState state = new PositionState(Position.bomb("A0"));
+        PositionState state = PositionState.bomb("A0");
 
         state.markAsBomb();
 
@@ -29,7 +29,7 @@ class PositionStateTest {
 
     @Test
     void markAsBomb_OnMarkedPosition_ThrowsException() {
-        PositionState state = new PositionState(Position.bomb("A0"));
+        PositionState state = PositionState.bomb("A0");
         state.markAsBomb();
 
         assertThatThrownBy(state::markAsBomb).isExactlyInstanceOf(IllegalStateException.class);
@@ -37,7 +37,7 @@ class PositionStateTest {
 
     @Test
     void reveal_OnEmptyPosition_IsEmpty() {
-        PositionState state = new PositionState(Position.empty("A0").withPositions(Collections.emptyList()));
+        PositionState state = PositionState.empty("A0").withAllStates(Collections.emptyList());
 
         state.reveal();
 
@@ -47,7 +47,7 @@ class PositionStateTest {
 
     @Test
     void reveal_OnBomb_IsX() {
-        PositionState state = new PositionState(Position.bomb("A0").withPositions(Collections.emptyList()));
+        PositionState state = PositionState.bomb("A0").withAllStates(Collections.emptyList());
 
         state.reveal();
 
@@ -57,8 +57,8 @@ class PositionStateTest {
 
     @Test
     void reveal_OnEmptyPosition_ShowsNumberOfBombs() {
-        List<Position> adjacentPositions = List.of(Position.empty("A1"), Position.bomb("B0"), Position.bomb("B1"));
-        PositionState state = new PositionState(Position.empty("A0").withPositions(adjacentPositions));
+        List<PositionState> adjacentPositionStates = List.of(PositionState.empty("A1"), PositionState.bomb("B0"), PositionState.bomb("B1"));
+        PositionState state = PositionState.empty("A0").withAllStates(adjacentPositionStates);
 
         state.reveal();
 
