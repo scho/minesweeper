@@ -5,6 +5,10 @@ import java.util.function.Consumer;
 
 public class Main {
 
+    public static void main(String[] args) {
+        new Main().run();
+    }
+
     private Game game = Game.newDefault();
 
     private void run() {
@@ -16,17 +20,25 @@ public class Main {
 
             readAction(scanner).accept(position);
 
-            printGameState();
-
             if (game.isGameOver()) {
+                game.revealAllAfterGameOver();
+
+                printGameState();
+
                 System.out.println("* * * GAME OVER * * *");
                 break;
             }
 
             if (game.isCorrect()) {
+                game.revealAllAfterGameOver();
+
+                printGameState();
+
                 System.out.println("* * * YOU WON * * *");
                 break;
             }
+
+            printGameState();
         }
     }
 
@@ -39,7 +51,7 @@ public class Main {
                 return game::reveal;
             }
             if (actionString.equals("B")) {
-                return game::reveal;
+                return game::markAsBomb;
             }
             System.out.println("Must be R or B, please type in again (R/B):");
         }
@@ -66,9 +78,5 @@ public class Main {
     private void printGameState() {
         game.print(System.out::println);
         System.out.println();
-    }
-
-    public static void main(String[] args) {
-        new Main().run();
     }
 }

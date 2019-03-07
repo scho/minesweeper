@@ -100,7 +100,7 @@ class StateTest {
 
     @Test
     void markAsBomb_OnEmpty_IsNotCorrect() {
-        State empty = State.empty("A0");
+        State empty = State.empty("A0").withAllStates(List.of(State.bomb("A1")));
 
         empty.markAsBomb();
 
@@ -109,7 +109,7 @@ class StateTest {
 
     @Test
     void unknown_IsNotCorrect() {
-        State unknown = State.empty("A0");
+        State unknown = State.empty("A0").withAllStates(List.of(State.bomb("A1")));
 
         assertThat(unknown.isCorrect()).isFalse();
     }
@@ -130,5 +130,23 @@ class StateTest {
         empty.reveal();
 
         assertThat(empty.isCorrect()).isTrue();
+    }
+
+    @Test
+    void revealAfterGameOver_OnEmpty_SetsState() {
+        State empty = State.empty("A0");
+
+        empty.revealAfterGameOver();
+
+        assertThat(empty.toString()).isEqualTo(" ");
+    }
+
+    @Test
+    void revealAfterGameOver_OnBomb_SetsState() {
+        State empty = State.bomb("A0");
+
+        empty.revealAfterGameOver();
+
+        assertThat(empty.toString()).isEqualTo("o");
     }
 }

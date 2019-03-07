@@ -43,6 +43,14 @@ public class State {
         this.selectedState = SelectedState.REVEALED;
     }
 
+    public void revealAfterGameOver() {
+        if (selectedState != SelectedState.HIDDEN) {
+            return;
+        }
+
+        selectedState = SelectedState.REVEALED_AFTER_GAME_OVER;
+    }
+
     private void revealIfNoBombsAdjacent() {
         if (isBomb()) {
             return;
@@ -64,6 +72,10 @@ public class State {
     }
 
     public boolean isCorrect() {
+        if (getNumberOfAdjacentBombs() == 0) {
+            return true;
+        }
+
         if (selectedState == SelectedState.HIDDEN) {
             return false;
         }
@@ -113,11 +125,7 @@ public class State {
                     return "x";
                 }
 
-                long numberOfAdjacentBombs = state.getNumberOfAdjacentBombs();
-                if (numberOfAdjacentBombs == 0) {
-                    return " ";
-                }
-                return String.valueOf(numberOfAdjacentBombs);
+                return numberOfBombs(state);
             }
         },
 
@@ -126,8 +134,28 @@ public class State {
             public String toString(State state) {
                 return "⚑";
             }
+        },
+
+        REVEALED_AFTER_GAME_OVER {
+            @Override
+            public String toString(State state) {
+                if (state.isBomb()) {
+                    return "o";
+                }
+
+                return numberOfBombs(state);
+            }
         };
 
+
         public abstract String toString(State state);
+
+        String numberOfBombs(State state) {
+            long numberOfAdjacentBombs = state.getNumberOfAdjacentBombs();
+            if (numberOfAdjacentBombs == 0) {
+                return " ";
+            }
+            return String.valueOf(numberOfAdjacentBombs);
+        }
     }
 }

@@ -48,6 +48,10 @@ public class Game {
         return states.stream().allMatch(row -> row.stream().allMatch(State::isCorrect));
     }
 
+    public void revealAllAfterGameOver() {
+        states.forEach(row -> row.forEach(State::revealAfterGameOver));
+    }
+
     private State findPositionState(Position position) {
         State state = states.get(position.getRow()).get(position.getColumn() - (int) 'A');
 
