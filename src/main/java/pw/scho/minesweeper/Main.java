@@ -19,14 +19,16 @@ public class Main {
 
             System.out.println("Reveal or mark as bomb (R/B):");
 
-            if (sc.hasNextLine()) {
+            while (sc.hasNextLine()) {
                 String revealOrMarkAsBomb = sc.nextLine();
 
                 if (revealOrMarkAsBomb.equals("R")) {
                     game.reveal(column, row);
+                    break;
                 }
                 if (revealOrMarkAsBomb.equals("B")) {
                     game.markAsBomb(column, row);
+                    break;
                 }
                 throw new IllegalArgumentException("Must be R or B");
             }
