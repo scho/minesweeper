@@ -7,8 +7,7 @@ public class Main {
     private Game game = Game.newDefault();
 
     private void run() {
-        game.print(System.out::println);
-        System.out.println("Select position:");
+        loop();
 
         Scanner sc = new Scanner(System.in);
         while (sc.hasNextLine()) {
@@ -30,9 +29,30 @@ public class Main {
                 throw new IllegalArgumentException("Must be R or B");
             }
 
-            game.print(System.out::println);
-            System.out.println("Select position:");
+            if (!loop()) {
+                return;
+            }
         }
+    }
+
+    private boolean loop() {
+        game.print(System.out::println);
+        System.out.println();
+
+        if (game.isGameOver()) {
+            System.out.println("* * * GAME OVER * * *");
+            return false;
+        }
+
+        if (game.isCorrect()) {
+            System.out.println("* * * YOU WON * * *");
+            return false;
+        }
+
+
+        System.out.println("Select position:");
+
+        return true;
     }
 
     public static void main(String[] args) {

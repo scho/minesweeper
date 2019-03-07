@@ -76,4 +76,59 @@ class StateTest {
         assertThat(state.toString()).isEqualTo(" ");
         assertThat(adjacentStates.stream().map(State::toString)).containsOnly(" ", " ", "1");
     }
+
+    @Test
+    void reveal_OnBomb_IsGameOver() {
+        State state = State.bomb("A0");
+
+        state.reveal();
+
+        assertThat(state.isGameOver()).isTrue();
+    }
+
+    @Test
+    void markAsBomb_IsNeverGameOver() {
+        State bomb = State.bomb("A0");
+        State empty = State.empty("A0");
+
+        bomb.markAsBomb();
+        empty.markAsBomb();
+
+        assertThat(bomb.isGameOver()).isFalse();
+        assertThat(empty.isGameOver()).isFalse();
+    }
+
+    @Test
+    void markAsBomb_OnEmpty_IsNotCorrect() {
+        State empty = State.empty("A0");
+
+        empty.markAsBomb();
+
+        assertThat(empty.isCorrect()).isFalse();
+    }
+
+    @Test
+    void unknown_IsNotCorrect() {
+        State unknown = State.empty("A0");
+
+        assertThat(unknown.isCorrect()).isFalse();
+    }
+
+    @Test
+    void markAsBomb_OnBomb_IsCorrect() {
+        State bomb = State.bomb("A0");
+
+        bomb.markAsBomb();
+
+        assertThat(bomb.isCorrect()).isTrue();
+    }
+
+    @Test
+    void reveal_OnEmpty_IsCorrect() {
+        State empty = State.empty("A0");
+
+        empty.reveal();
+
+        assertThat(empty.isCorrect()).isTrue();
+    }
 }

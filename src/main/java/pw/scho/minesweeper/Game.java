@@ -40,6 +40,14 @@ public class Game {
         state.markAsBomb();
     }
 
+    public boolean isGameOver() {
+        return states.stream().anyMatch(row -> row.stream().anyMatch(State::isGameOver));
+    }
+
+    public boolean isCorrect() {
+        return states.stream().allMatch(row -> row.stream().allMatch(State::isCorrect));
+    }
+
     private State findPositionState(Position position) {
         State state = states.get(position.getRow()).get(position.getColumn() - (int) 'A');
 

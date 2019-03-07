@@ -53,7 +53,7 @@ public class State {
         }
 
         this.selectedState = SelectedState.REVEALED;
-        
+
         if (getNumberOfAdjacentBombs() == 0) {
             adjacentStates.forEach(State::revealIfNoBombsAdjacent);
         }
@@ -61,6 +61,18 @@ public class State {
 
     public boolean isGameOver() {
         return selectedState == SelectedState.REVEALED && isBomb();
+    }
+
+    public boolean isCorrect() {
+        if (selectedState == SelectedState.HIDDEN) {
+            return false;
+        }
+
+        if (selectedState == SelectedState.MARKED_AS_BOMB && !isBomb()) {
+            return false;
+        }
+
+        return true;
     }
 
     public State withAllStates(List<State> allStates) {
