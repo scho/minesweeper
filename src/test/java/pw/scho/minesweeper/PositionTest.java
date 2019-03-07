@@ -41,6 +41,7 @@ class PositionTest {
             "A0, A1, true",
             "A0, B0, true",
             "A0, B1, true",
+            "A0, A0, false",
             "A0, A2, false",
             "A0, C0, false"
     })

@@ -65,4 +65,15 @@ class StateTest {
         assertThat(state.toString()).isEqualTo("2");
         assertThat(state.isGameOver()).isFalse();
     }
+
+    @Test
+    void reveal_OnEmptyPosition_RevealsAdjacentFields() {
+        List<State> adjacentStates = List.of(State.empty("A1"), State.empty("B0"), State.empty("B1").withAllStates(List.of(State.bomb("C1"))));
+        State state = State.empty("A0").withAllStates(adjacentStates);
+
+        state.reveal();
+
+        assertThat(state.toString()).isEqualTo(" ");
+        assertThat(adjacentStates.stream().map(State::toString)).containsOnly(" ", " ", "1");
+    }
 }

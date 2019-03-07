@@ -23,6 +23,9 @@ public class Position {
     }
 
     public boolean isAdjacent(Position otherPosition) {
+        if (row == otherPosition.row && column == otherPosition.column) {
+            return false;
+        }
         return Math.abs(row - otherPosition.row) <= 1 && Math.abs((int) column - (int) otherPosition.column) <= 1;
     }
 
