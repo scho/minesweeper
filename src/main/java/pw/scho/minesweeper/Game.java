@@ -44,7 +44,7 @@ public class Game {
         return states.stream().anyMatch(row -> row.stream().anyMatch(State::isGameOver));
     }
 
-    public boolean isCorrect() {
+    public boolean hasWon() {
         return states.stream().allMatch(row -> row.stream().allMatch(State::isCorrect));
     }
 

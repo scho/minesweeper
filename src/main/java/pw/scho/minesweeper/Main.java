@@ -29,12 +29,12 @@ public class Main {
                 break;
             }
 
-            if (game.isCorrect()) {
+            if (game.hasWon()) {
                 game.revealAllAfterGameOver();
 
                 printGameState();
 
-                System.out.println("* * * YOU WON * * *");
+                System.out.println("(-: YOU WON :-)");
                 break;
             }
 
