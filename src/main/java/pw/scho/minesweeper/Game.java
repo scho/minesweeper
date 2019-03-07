@@ -11,64 +11,64 @@ public class Game {
 
     private static final Random RANDOM = new Random();
 
-    private final List<List<PositionState>> states;
+    private final List<List<State>> states;
 
-    public Game(List<List<PositionState>> states) {
+    public Game(List<List<State>> states) {
         this.states = states;
     }
 
     public void print(Consumer<String> printer) {
-        String columnLabels = states.get(0).stream().map(PositionState::getPosition).map(Position::getColumn).map(Object::toString).collect(Collectors.joining(" "));
+        String columnLabels = states.get(0).stream().map(State::getPosition).map(Position::getColumn).map(Object::toString).collect(Collectors.joining(" "));
 
         printer.accept("  " + columnLabels);
 
         states.stream().map(row -> {
             int rowLabel = row.get(0).getPosition().getRow();
-            return rowLabel + " " + row.stream().map(PositionState::toString).collect(Collectors.joining(" "));
+            return rowLabel + " " + row.stream().map(State::toString).collect(Collectors.joining(" "));
         }).forEach(printer);
     }
 
     public void reveal(char column, int row) {
-        PositionState positionState = findPositionState(column, row);
+        State state = findPositionState(column, row);
 
-        positionState.reveal();
+        state.reveal();
     }
 
     public void markAsBomb(char column, int row) {
-        PositionState positionState = findPositionState(column, row);
+        State state = findPositionState(column, row);
 
-        positionState.markAsBomb();
+        state.markAsBomb();
     }
 
-    private PositionState findPositionState(int column, int row) {
-        PositionState positionState = states.get(row).get(column - (int) 'A');
+    private State findPositionState(int column, int row) {
+        State state = states.get(row).get(column - (int) 'A');
 
-        if (positionState == null) {
+        if (state == null) {
             throw new IllegalStateException("Position does not exist");
         }
-        return positionState;
+        return state;
     }
 
     public static Game newDefault() {
-        var states = new LinkedList<List<PositionState>>();
-        var allStates = new LinkedList<PositionState>();
+        var states = new LinkedList<List<State>>();
+        var allStates = new LinkedList<State>();
         IntStream.range(0, 5).forEach(row -> {
-            List<PositionState> rowStates = new LinkedList<>();
+            List<State> rowStates = new LinkedList<>();
             List.of('A', 'B', 'C', 'D', 'E').forEach(column -> {
-                PositionState positionState;
+                State state;
 
                 if (RANDOM.nextInt(10) > 7) {
-                    positionState = PositionState.bomb(column + String.valueOf(row));
+                    state = State.bomb(column + String.valueOf(row));
                 } else {
-                    positionState = PositionState.empty(column + String.valueOf(row));
+                    state = State.empty(column + String.valueOf(row));
                 }
 
-                rowStates.add(positionState);
+                rowStates.add(state);
             });
             states.add(rowStates);
             allStates.addAll(rowStates);
         });
-        allStates.forEach(positionState -> positionState.withAllStates(allStates));
+        allStates.forEach(state -> state.withAllStates(allStates));
 
         return new Game(states);
     }

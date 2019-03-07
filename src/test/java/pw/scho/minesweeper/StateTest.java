@@ -8,18 +8,18 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class PositionStateTest {
+class StateTest {
 
     @Test
     void hidden_HasSquare() {
-        PositionState state = PositionState.bomb("A0");
+        State state = State.bomb("A0");
 
         assertThat(state.toString()).isEqualTo("■");
     }
 
     @Test
     void markAsBomb_SetsState() {
-        PositionState state = PositionState.bomb("A0");
+        State state = State.bomb("A0");
 
         state.markAsBomb();
 
@@ -29,7 +29,7 @@ class PositionStateTest {
 
     @Test
     void markAsBomb_OnMarkedPosition_ThrowsException() {
-        PositionState state = PositionState.bomb("A0");
+        State state = State.bomb("A0");
         state.markAsBomb();
 
         assertThatThrownBy(state::markAsBomb).isExactlyInstanceOf(IllegalStateException.class);
@@ -37,7 +37,7 @@ class PositionStateTest {
 
     @Test
     void reveal_OnEmptyPosition_IsEmpty() {
-        PositionState state = PositionState.empty("A0").withAllStates(Collections.emptyList());
+        State state = State.empty("A0").withAllStates(Collections.emptyList());
 
         state.reveal();
 
@@ -47,7 +47,7 @@ class PositionStateTest {
 
     @Test
     void reveal_OnBomb_IsX() {
-        PositionState state = PositionState.bomb("A0").withAllStates(Collections.emptyList());
+        State state = State.bomb("A0").withAllStates(Collections.emptyList());
 
         state.reveal();
 
@@ -57,8 +57,8 @@ class PositionStateTest {
 
     @Test
     void reveal_OnEmptyPosition_ShowsNumberOfBombs() {
-        List<PositionState> adjacentPositionStates = List.of(PositionState.empty("A1"), PositionState.bomb("B0"), PositionState.bomb("B1"));
-        PositionState state = PositionState.empty("A0").withAllStates(adjacentPositionStates);
+        List<State> adjacentStates = List.of(State.empty("A1"), State.bomb("B0"), State.bomb("B1"));
+        State state = State.empty("A0").withAllStates(adjacentStates);
 
         state.reveal();
 
