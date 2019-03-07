@@ -23,7 +23,7 @@ class GameTest {
     void reveal_IsDelegated() {
         Game game = Game.newDefault();
 
-        game.reveal('A', 0);
+        game.reveal(Position.of("A0"));
 
         List<String> rows = new LinkedList<>();
         game.print(rows::add);
@@ -34,7 +34,7 @@ class GameTest {
     void markAsBomb_IsDelegated() {
         Game game = Game.newDefault();
 
-        game.markAsBomb('A', 0);
+        game.markAsBomb(Position.of("A0"));
 
         List<String> rows = new LinkedList<>();
         game.print(rows::add);

@@ -12,10 +12,7 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
         while (sc.hasNextLine()) {
-            String position = sc.nextLine();
-
-            char column = position.charAt(0);
-            int row = Character.getNumericValue(position.charAt(1));
+            Position position = Position.of(sc.nextLine());
 
             System.out.println("Reveal or mark as bomb (R/B):");
 
@@ -23,11 +20,11 @@ public class Main {
                 String revealOrMarkAsBomb = sc.nextLine();
 
                 if (revealOrMarkAsBomb.equals("R")) {
-                    game.reveal(column, row);
+                    game.reveal(position);
                     break;
                 }
                 if (revealOrMarkAsBomb.equals("B")) {
-                    game.markAsBomb(column, row);
+                    game.markAsBomb(position);
                     break;
                 }
                 throw new IllegalArgumentException("Must be R or B");
@@ -40,6 +37,5 @@ public class Main {
 
     public static void main(String[] args) {
         new Main().run();
-
     }
 }

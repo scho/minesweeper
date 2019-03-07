@@ -28,20 +28,20 @@ public class Game {
         }).forEach(printer);
     }
 
-    public void reveal(char column, int row) {
-        State state = findPositionState(column, row);
+    public void reveal(Position position) {
+        State state = findPositionState(position);
 
         state.reveal();
     }
 
-    public void markAsBomb(char column, int row) {
-        State state = findPositionState(column, row);
+    public void markAsBomb(Position position) {
+        State state = findPositionState(position);
 
         state.markAsBomb();
     }
 
-    private State findPositionState(int column, int row) {
-        State state = states.get(row).get(column - (int) 'A');
+    private State findPositionState(Position position) {
+        State state = states.get(position.getRow()).get(position.getColumn() - (int) 'A');
 
         if (state == null) {
             throw new IllegalStateException("Position does not exist");
