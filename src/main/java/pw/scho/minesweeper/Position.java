@@ -22,6 +22,10 @@ public class Position {
         return column;
     }
 
+    public boolean isAdjacent(Position otherPosition) {
+        return Math.abs(column - otherPosition.column) <= 1 && Math.abs((int) row - (int) otherPosition.row) <= 1;
+    }
+
     public static Position of(String value) {
         if (value.length() != 2) {
             throw new IllegalArgumentException("Only input length of 2 is supported");

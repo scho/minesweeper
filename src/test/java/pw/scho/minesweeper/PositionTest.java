@@ -35,4 +35,20 @@ class PositionTest {
     void isValid_ValidatesCorrectly(String position, boolean expectedValue) {
         assertThat(Position.of(position).isValid()).isEqualTo(expectedValue);
     }
+
+    @ParameterizedTest
+    @CsvSource({
+            "A0, A1, true",
+            "A0, B0, true",
+            "A0, B1, true",
+            "A0, A2, false",
+            "A0, C0, false"
+    })
+    void isAdjacent(String position, String otherPosition, boolean expectedValue) {
+        Position first = Position.of(position);
+        Position second = Position.of(otherPosition);
+
+        assertThat(first.isAdjacent(second)).isEqualTo(expectedValue);
+    }
+
 }
